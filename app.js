@@ -27,7 +27,7 @@ app.get('/processCC', (req, res) => {
 
 
 app.all('/secret', (req, res, next) => {
-    res.send('Kill yourself');
+    res.send('They took my entire life savings');
     console.log('Time: ', Date.now());
     next();
 });
