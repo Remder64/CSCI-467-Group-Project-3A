@@ -2,12 +2,12 @@ const axios = require('axios');
 const express = require('express');
 var app = express();
 
-app.get('/', function(req, res) {
+app.get('./processCC', function(req, res) {
     res.send("Hi, this is where you process credit cards")
 })
 
 
-/*
+
 module.exports = {
     processSample: async result => {
         var data = {
@@ -25,4 +25,3 @@ module.exports = {
         });
     }
 }
-    */
