@@ -1,22 +1,111 @@
 <html>
 
+<style>
+    .catalog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        border: 2px solid;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    th {
+        background-color: darkgoldenrod;
+        border-color: black;
+        color: white;
+    }
+
+    tr.data {
+        cursor: pointer;
+    }
+
+    tr:nth-child(even).data {
+        background-color: blanchedalmond;
+    }
+
+    tr:hover.data {
+        background-color: khaki;
+    }
+
+    
+</style>
+
+<html>
+
+<style>
+    .catalog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        border: 2px solid;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    th {
+        background-color: darkgoldenrod;
+        border-color: black;
+        color: white;
+    }
+
+    tr.data {
+        cursor: pointer;
+    }
+
+    tr:nth-child(even).data {
+        background-color: blanchedalmond;
+    }
+
+    tr:hover.data {
+        background-color: khaki;
+    }
+
+    
+</style>
+
+
+
 <head>
     <title>Part List</title>
 </head>
 
 <body>
-    <h3>List of all Parts:</h3>
-    <il>
+    <div class="catalog">
+    <table>
+        <tr>
+            <th>Number</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Weight</th>
+            <th>Picture</th>
+        </tr>
         <% for (part in all) { %>
-            <li>
-            <%= all[part].number %>,
-            <%= all[part].description %>,
-            <%= all[part].price %>,
-            <%= all[part].weight %>,
-            <a href=<%= all[part].pictureURL %>>link</a>
-            </li>
+        <tr class="data" data-href='http://localhost:4010/getParts/item'>
+            <td><%= all[part].number %></td>
+            <td><%= all[part].description %></td>
+            <td>$<%= all[part].price %></td>
+            <td><%= all[part].weight %> lbs</td>
+            <td><img src=<%= all[part].pictureURL %>></img></td>
         <% }; %>
-    </il>
+        </tr>
+    </table>
+    </div>
 </body>
 
 </html>
+
