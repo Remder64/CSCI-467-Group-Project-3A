@@ -1,0 +1,40 @@
+<html>
+    <style>
+
+    </style>
+
+    <h2>Your Cart</h2>
+
+    <table>
+    <tr>
+        <th>Picture</th>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Price</th>
+    </tr>
+
+    <% cart.forEach(item => { %>
+        <tr>
+            <td><img src=<%= item.pictureURL %>></img></td>
+            <td><%= item.description %></td>
+            <td><%= item.qty %></td>
+            <td>$<%= item.price %></td>
+            <td>
+                <form method="POST" action="/cart/remove/<%= item.number %>">
+                    <button type="submit">Remove From Cart</button>
+                </form>
+            </td>
+        </tr>
+    <% }) %>
+    </table>
+
+    <form method="POST" action="/cart/clear">
+        <button type="submit">Clear Cart</button>
+    </form>
+
+    <h3>Total: $<%= total.toFixed(2) %></h3>
+
+    <a href="/checkoutPart">Proceed to Checkout</a><br>
+    <a href="/getParts">Back to Catalog</a>
+
+</html>

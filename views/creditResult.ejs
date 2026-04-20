@@ -1,0 +1,19 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>SUCCESS!</h1>
+        <h3>Transaction Was Approved! Thank You For Shopping</h3><br>
+            
+        <il>
+            <% for( item in data ) { %>
+                <li>
+                <%= item %>: <%= data[item] %>
+                </li>
+            <% }; %>
+        </il>
+
+        <a href="/">Home</a>
+    </body>
+</html>
