@@ -38,46 +38,6 @@
     
 </style>
 
-<html>
-
-<style>
-    .catalog {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    table {
-        border: 2px solid;
-    }
-
-    table, th, td {
-        border: 1px solid;
-        border-collapse: collapse;
-        padding: 5px;
-    }
-
-    th {
-        background-color: darkgoldenrod;
-        border-color: black;
-        color: white;
-    }
-
-    tr.data {
-        cursor: pointer;
-    }
-
-    tr:nth-child(even).data {
-        background-color: blanchedalmond;
-    }
-
-    tr:hover.data {
-        background-color: khaki;
-    }
-
-    
-</style>
-
 
 
 <head>
@@ -85,22 +45,36 @@
 </head>
 
 <body>
+    <a href="/">Home</a><br>
+    <a href="/cart">Cart (<%= partsInCart %>)</a><br>
+
+    <form method="POST" action="/getParts/search">
+        <input type="text" name="search"/>
+        <button type="submit">Search</button>
+    </form>
+
     <div class="catalog">
     <table>
         <tr>
-            <th>Number</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Weight</th>
             <th>Picture</th>
+            <th>Name</th>
+            <th>Part Number</th>
+            <th>Weight</th>
+            <th>Price</th>
+            <th>Cart</th>
         </tr>
         <% for (part in all) { %>
-        <tr class="data" data-href='http://localhost:4010/getParts/item'>
-            <td><%= all[part].number %></td>
-            <td><%= all[part].description %></td>
-            <td>$<%= all[part].price %></td>
-            <td><%= all[part].weight %> lbs</td>
+        <tr class="data">
             <td><img src=<%= all[part].pictureURL %>></img></td>
+            <td><%= all[part].description %></td>
+            <td><%= all[part].number %></td>
+            <td><%= all[part].weight %> lbs</td>
+            <td>$<%= all[part].price %></td>
+            <td>
+                <form action="/cart/add/<%= all[part].number %>" method="POST">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </td>
         <% }; %>
         </tr>
     </table>
