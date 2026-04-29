@@ -1,4 +1,6 @@
-
+//move this file to the main directory (where app.js is)
+//make sure your local database server is running
+//use npm install --save mysql2
 const mysql = require('mysql2/promise');
 
 //cloud
@@ -12,11 +14,11 @@ const pool1 = mysql.createPool({
         rejectUnauthorized: false
     }
 });
-//local
+//local (may need to change)
 const pool2 = mysql.createPool({
     host: 'localhost',
-    user: 'guest',
-    password: 'guest123',
+    user: 'guest', //change to your user, (most likely "root")
+    password: 'guest123', //change to your password
     database: 'auto_parts',
     port: '3306'
 });
