@@ -28,7 +28,7 @@ async function copyParts() {
         console.log(`Fetched ${rows.length} parts`);
 
         for (const autoParts of rows) {
-            await pool2.query('INSERT INTO inventory (partNumber, quantityOnHand, description) VALUES (?,0,?)',
+            await pool2.query('INSERT INTO inventory (partNumber, quantityOnHand, description) VALUES (?,2,?)',
                 [autoParts.number, autoParts.description]);
         }
 
