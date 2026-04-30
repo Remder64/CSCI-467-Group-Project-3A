@@ -41,6 +41,15 @@ module.exports = {
         });
     },
 
+    //get only orders that are authorized
+    AuthOrders: async result => {
+        pool2.query('SELECT * FROM customerorders WHERE status = \'authorized\'', function (err, rows) {
+            if (err) throw err;
+            console.log('found ', rows.length, ' customer orders with the status: authorized');
+            result(rows);
+        });
+    },
+    
     //get all parts on a specific order
     orderPartID: async (orderID, result) => {
         pool2.query('SELECT * FROM orderParts WHERE orderID = ?' [orderID], function (err, rows) {
