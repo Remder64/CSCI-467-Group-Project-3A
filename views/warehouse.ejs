@@ -1,0 +1,67 @@
+<html>
+
+<style>
+    .catalog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        border: 2px solid;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    th {
+        background-color: darkgoldenrod;
+        border-color: black;
+        color: white;
+    }
+
+    tr.data {
+        cursor: pointer;
+    }
+
+    tr:nth-child(even).data {
+        background-color: blanchedalmond;
+    }
+
+    tr:hover.data {
+        background-color: khaki;
+    }
+
+    
+</style>
+
+
+
+<head>
+    <title>Inventory</title>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Quantity</th>
+            <th>Change Quantity</th>
+        </tr>   
+
+        <% inventory.forEach(row => { %>
+            <tr>
+                <td><%= row.partNumber %></td>
+                <td><%= row.quantityOnHand%></td>
+                <td>add form</td>
+            </tr>
+        <% }) %>
+
+    </table>
+</head>
+<body>
+
+</body>
+
+</html>
+

@@ -133,6 +133,16 @@ app.post('/checkoutPart/processCC', (req, res) => {
 });
 
 
+//warehouse
+const id = require('./controllers/database2');
+app.get('/warehouse', (req, res) => {
+  id.partID((list) => {
+    res.render('/warehouse.ejs');
+  });
+});  
+
+
+
 app.listen(port, () => {
   console.log(`Listening to this bs at ${port}`)
 });
