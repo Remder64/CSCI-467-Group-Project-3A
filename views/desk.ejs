@@ -55,7 +55,7 @@
             <td><%= all[part].quantityOnHand%></td>
             <td>
                 <form action="/desk/<%=all[part].partNumber%>" method="POST">
-                    <input type="text" id="quantity" value="insert here"><br><br>
+                    <input type="text" name="quantity" value="insert here"><br><br>
                     <input type="submit" value="Submit">
                 </form>
             </td>
