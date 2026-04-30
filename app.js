@@ -133,7 +133,7 @@ app.post('/checkoutPart/processCC', (req, res) => {
 });
 
 
-//warehouse
+//desk
 const id = require('./controllers/database2');
 app.get('/desk', (req, res) => {
   id.partID((list) => {
@@ -141,7 +141,19 @@ app.get('/desk', (req, res) => {
     res.render('desk', {all: list, partsininv});
   });
 }); 
-//below needs a post where it changes value in table then redirect back to warehouse (or just do it in the web)
+
+
+//desk change quantity at the id
+app.use(express.urlencoded({ extended: true }));
+app.post('/desk/:partNumber', async (req, res) => {
+  const currentid = req.params.partNumber;
+  const newquantity = req.body.quantity;
+  console.log(req.body.quantity);
+
+  id.ChangeQuantity(currentid, newquantity);
+  
+  res.redirect('/desk');
+});
 
 
 app.listen(port, () => {

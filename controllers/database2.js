@@ -7,6 +7,7 @@ var pool2 = mysql.createPool({
     port: '3306'
 });
 
+//'UPDATE inventory SET qunatityOnHand = 'param1' WHERE partNumber = 'param2' '
 
 module.exports = {
     //get all info on parts in inventory
@@ -26,7 +27,7 @@ module.exports = {
             function (err, rows) {
                 if (err) throw err;
                 console.log('changed ', rows.affectedRows, ' row in inventory');
-                result(rows);
+                //result(rows); not needed?
             }
         );
     },
