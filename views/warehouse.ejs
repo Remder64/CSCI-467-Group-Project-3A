@@ -49,13 +49,16 @@
             <th>Change Quantity</th>
         </tr>   
 
-        <% inventory.forEach(row => { %>
+        <% for (part in all) { %>
             <tr>
-                <td><%= row.partNumber %></td>
-                <td><%= row.quantityOnHand%></td>
-                <td>add form</td>
+                <td><%= part.partNumber %></td>
+                <td><%= part.quantityOnHand%></td>
+                <td>
+
+                </td>
+
             </tr>
-        <% }) %>
+        <% }; %>
 
     </table>
 </head>

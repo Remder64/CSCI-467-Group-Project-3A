@@ -137,9 +137,10 @@ app.post('/checkoutPart/processCC', (req, res) => {
 const id = require('./controllers/database2');
 app.get('/warehouse', (req, res) => {
   id.partID((list) => {
-    res.render('/warehouse.ejs');
+    const partsininv = req.session.inventory ? req.session.inventory.length : 0;
+    res.render('warehouse', {all: list, partsininv});
   });
-});  
+}); 
 
 
 
