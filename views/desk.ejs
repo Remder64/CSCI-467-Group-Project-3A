@@ -50,15 +50,12 @@
         </tr>   
 
         <% for (part in all) { %>
-            <tr>
-                <td><%= part.partNumber %></td>
-                <td><%= part.quantityOnHand%></td>
-                <td>
-
-                </td>
-
-            </tr>
+        <tr>
+            <td><%= all[part].partNumber %></td>
+            <td><%= all[part].quantityOnHand%></td>
+            <td>add form</td>
         <% }; %>
+        </tr>
 
     </table>
 </head>

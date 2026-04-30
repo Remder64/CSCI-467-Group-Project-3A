@@ -135,13 +135,13 @@ app.post('/checkoutPart/processCC', (req, res) => {
 
 //warehouse
 const id = require('./controllers/database2');
-app.get('/warehouse', (req, res) => {
+app.get('/desk', (req, res) => {
   id.partID((list) => {
     const partsininv = req.session.inventory ? req.session.inventory.length : 0;
-    res.render('warehouse', {all: list, partsininv});
+    res.render('desk', {all: list, partsininv});
   });
 }); 
-
+//below needs a post where it changes value in table then redirect back to warehouse (or just do it in the web)
 
 
 app.listen(port, () => {

@@ -1,3 +1,5 @@
+
+
 var mysql = require('mysql2')
 var pool2 = mysql.createPool({
     host: 'localhost',
@@ -12,7 +14,7 @@ module.exports = {
     partID: async result => {
         pool2.query('SELECT * FROM inventory', function(err, rows){
             if (err) throw err;
-            console.log('found ', rows.length , ' parts');
+            console.log('found ', rows.length , ' parts in inventory');
             result(rows);
         });
     },
