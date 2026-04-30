@@ -42,9 +42,9 @@ module.exports = {
 
     //get all parts on a specific order
     orderPartID: async (orderID, result) => {
-        pool2.query('SELECT * FROM orderParts WHERE orderID = ?', function (err, rows) {
+        pool2.query('SELECT * FROM orderParts WHERE orderID = ?' [orderID], function (err, rows) {
             if (err) throw err;
-            console.log('found ', rows.length, ' customer orders');
+            console.log('found ', rows.length, ' parts');
             result(rows);
         });
     },
