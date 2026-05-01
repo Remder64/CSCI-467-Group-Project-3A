@@ -107,6 +107,43 @@ module.exports = {
             result(rows);
         });
     },
+
+    changemin: (result) => {
+        pool2.query('UPDATE shippingrates SET minWeight = ? WHERE rateID = ?', function(err, rows) {
+            [minWeight, rateID],
+            function (err, rows) {
+                if (err) throw err;
+                console.log('changed ', rows.affectedRows, ' row in inventory');
+                //result(rows); not needed?
+            }
+        });
+    },
+
+    changemax: (result) => {
+        pool2.query('UPDATE shippingrates SET maxWeight = ? WHERE rateID = ?', function(err, rows) {
+            [maxWeight, rateID],
+            function (err, rows) {
+                if (err) throw err;
+                console.log('changed ', rows.affectedRows, ' row in inventory');
+                //result(rows); not needed?
+            }
+        });
+    },
+
+    /*
+    //changes the quantity on hand for a specific part
+    ChangeQuantity: (partNumber, quantity, result) => {
+        pool2.query(
+            'UPDATE inventory SET quantityOnHand = ? WHERE partNumber = ?',
+            [quantity, partNumber],
+            function (err, rows) {
+                if (err) throw err;
+                console.log('changed ', rows.affectedRows, ' row in inventory');
+                //result(rows); not needed?
+            }
+        );
+    },
+    */
     
     addShippingRate: (minWeight, maxWeight, charge, result) => {
         pool2.query(

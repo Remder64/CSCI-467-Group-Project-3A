@@ -244,6 +244,50 @@ app.post('/warehouse/order/:orderID/ship', (req, res) => {
   });
 });
 
+//admin
+app.get('/administration', (req, res) => {
+  id.getShippingRates((list) => {
+    const partsInshipping = req.session.shippingrates ? req.session.shippingrates.length : 0;
+    res.render('administration', {all: list, partsInshipping});
+  });
+}); 
+
+app.get('/administration/min/:num', async (req, res) => {
+  id.getShippingRates((list) => {
+    const currentid = req.params.rateID;
+    const newmin = req.body.min;
+    id.changemin(currentid, newmin)
+
+    res.redirect('/administration');
+  });
+}); 
+
+app.get('/administration/max/:num', async (req, res) => {
+  id.getShippingRates((list) => {
+    const currentid = req.params.rateID;
+    const newmax = req.body.max;
+    
+    id.changemin(currentid, newmax)
+
+    res.redirect('/administration');
+  });
+});
+
+
+
+/*
+//desk change quantity at the id
+app.use(express.urlencoded({ extended: true }));
+app.post('/desk/:partNumber', async (req, res) => {
+  const currentid = req.params.partNumber;
+  const newquantity = req.body.quantity;
+  console.log(req.body.quantity);
+
+  id.ChangeQuantity(currentid, newquantity);
+  
+  res.redirect('/desk');
+});
+*/
 
 app.listen(port, () => {
   console.log(`Listening to this bs at ${port}`)

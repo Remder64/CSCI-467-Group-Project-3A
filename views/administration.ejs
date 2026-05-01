@@ -1,0 +1,80 @@
+<html>
+<style>
+        table {
+            border: 2px solid;
+            border-radius: 8px;
+            width: 10%;
+        }
+
+        table, th, td {
+            border: 1px solid;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #CFA902;
+            border-color: #191500;
+            color: #FFFAE6;
+            text-align: center;
+        }
+
+        tr:nth-child(even).data {
+            background-color: #FFFCEE;
+        }
+
+        tr:nth-child(odd).data {
+            background-color: #FFF0B1;
+        }
+
+        tr:hover.data {
+            background-color: #B2A671;
+        }
+        header {
+            margin: 20px;
+        }
+    </style>
+
+
+<head>
+    <title>admin</title>
+    <header>Shipping rates</header>
+    <div class="catalog">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>min weight</th>
+            <th>max weight</th>
+            <th>charge</th>
+        </tr>   
+
+        <% for (part in all) { %>
+        <tr>
+            <td><%= all[part].rateID %></td>
+            <td>
+                current min: <%= all[part].minWeight %>
+                <form action="/administration/min/<%=all[part].minWeight%>" method="POST">
+                    <input type="text" name="min" value="new min?"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </td>
+            <td>
+                current max: <%= all[part].maxWeight %>
+                <form action="/administration/max/<%=all[part].maxWeight %>" method="POST">
+                    <input type="text" name="max" value="new max?"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </td>
+            <td>charge</td>
+        <% }; %>
+        </tr>
+
+    </table>
+    </div>
+</head>
+<body>
+
+</body>
+
+</html>
+
