@@ -61,6 +61,10 @@ app.get('/cart', (req, res) => {
 
 
 app.post('/cart/add/:num', async (req, res) => {
+  if (req.body.quantity == 0) {
+      res.redirect('/getParts');
+  }
+
   const prtNum = req.params.num;
 
   parts.getByNum(prtNum, (part) => {
