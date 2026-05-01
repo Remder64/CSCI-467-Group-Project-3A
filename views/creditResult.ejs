@@ -1,18 +1,23 @@
 <html>
     <head>
-
     </head>
     <body>
-        <h1>SUCCESS!</h1>
-        <h3>Transaction Was Approved! Thank You For Shopping</h3><br>
-            
-        <il>
+        <% if (data.errors && data.errors.length > 0) { %>
+            <h1>TRANSACTION FAILED!</h1>
+            <h3>Your order could not be completed. Please check your card details and try again.</h3>
+            <p>Error: <%= data.errors %></p>
+        <% } else { %>
+            <h1>SUCCESS!</h1>
+            <h3>Transaction Was Approved! Thank You For Shopping</h3>
+        <% } %>
+
+        <ul>
             <% for( item in data ) { %>
                 <li>
                 <%= item %>: <%= data[item] %>
                 </li>
             <% }; %>
-        </il>
+        </ul>
 
         <a href="/">Home</a>
     </body>
