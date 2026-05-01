@@ -1,15 +1,42 @@
+
 <html>
-    <head>
-        <title>Express Server Starter</title>
-    </head>
+
+<style>
+    .catalog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    header {
+        text-align: center;
+        font-size: 30px;
+        margin: 50px;
+    }
+
+    ul {
+        background: rgb(64, 206, 156);
+        padding: 20px;
+    }
+
+    ul li {
+        background: rgb(255, 121, 104);
+        color: rgb(2, 2, 58);
+        margin: 50px;
+    }
+
+    
+</style>
+
+<html>
+    <div class="catalog">
     <body>
-        <h3>Express Server</h3>
-        This server is an example.
+        <header>Product Server</header>
         <ul>
             <li><a href="getParts">get all parts</a></li>
-            <li><a href="processCC">process a credit card</a></li>
             <li><a href="desk">Warehouse desk</a></li>
             <li><a href="warehouseWorker">Warehouse Worker</a></li>
         </ul>
     </body>
+    </div>
 </html>
