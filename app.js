@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const exSession = require('express-session');
 const path = require("path");
+const nodemailer = require('nodemailer');
 const port = 4010;
 
 app.set('view engine', 'ejs');
