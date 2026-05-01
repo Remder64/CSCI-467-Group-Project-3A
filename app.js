@@ -69,9 +69,10 @@ app.post('/cart/add/:num', async (req, res) => {
     //checks if there is a session for the user
     if(!req.session.cart) req.session.cart = [];
 
-    var existingItem = req.session.cart.find((item) => item.number === prtNum);
+    var existingItem = req.session.cart.find((item) => item.number == prtNum);
+    console.log(existingItem);
     if (existingItem) {
-      existingItem.qty += 1;
+      existingItem.qty = +existingItem.qty + +req.body.quantity;
     }
     else {
       req.session.cart.push({
@@ -80,7 +81,7 @@ app.post('/cart/add/:num', async (req, res) => {
         price: part.price,
         weight: part.weight,
         picture: part.picture,
-        qty: 1
+        qty: req.body.quantity
       });
     }
 
