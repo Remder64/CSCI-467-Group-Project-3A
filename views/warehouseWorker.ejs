@@ -34,12 +34,95 @@
     tr:hover.data {
         background-color: khaki;
     }
-
-    
 </style>
 
 <head>
-    <title>Work list</title>
+    <title>Warehouse Worker</title>
 </head>
 
-<html>
+<body>
+    <h2>Warehouse Worker View</h2>
+    <a href="/">Home</a><br><br>
+
+    <% if (typeof order === 'undefined') { %>
+
+        <!-- ORDER LIST -->
+        <h3>Orders to Process: <%= orders.length %></h3>
+
+        <% if (orders.length === 0) { %>
+            <p>No orders to process right now.</p>
+        <% } else { %>
+            <table>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+                <% orders.forEach(function(o) { %>
+                <tr class="data">
+                    <td><%= o.orderID %></td>
+                    <td><%= o.orderDate %></td>
+                    <td><%= o.custName %></td>
+                    <td>$<%= o.totalPrice %></td>
+                    <td>
+                        <a href="/warehouse/order/<%= o.orderID %>">
+                            <button>Start Packing</button>
+                        </a>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+        <% } %>
+
+    <% } else { %>
+
+        <!-- PACKING LIST -->
+        <h3>Packing List — Order #<%= order.orderID %></h3>
+        <p>Customer: <%= order.custName %></p>
+        <p>Ship to: <%= order.custAddress %>, <%= order.custCity %>, <%= order.custState %> <%= order.custZip %></p>
+
+        <form method="POST" action="/warehouse/order/<%= order.orderID %>/ship">
+            <table>
+                <tr>
+                    <th>Part Number</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Gathered?</th>
+                </tr>
+                <% items.forEach(function(item) { %>
+                <tr>
+                    <td><%= item.partNumber %></td>
+                    <td><%= item.description %></td>
+                    <td><%= item.quantity %></td>
+                    <td>
+                        <input type="checkbox" name="gathered_<%= item.partNumber %>" required>
+                    </td>
+                </tr>
+                <% }); %>
+            </table>
+
+            <br>
+            <button type="button" onclick="window.print()">Print Packing List / Invoice</button><br><br>
+
+            <label>
+                <input type="checkbox" name="invoiceAdded" required>
+                Invoice has been printed and added
+            </label><br>
+
+            <label>
+                <input type="checkbox" name="labelAdded" required>
+                Shipping label has been printed and added
+            </label><br><br>
+
+            <button type="submit">Confirm Shipped</button>
+        </form>
+
+        <br>
+        <a href="/warehouse">Back to Order List</a>
+
+    <% } %>
+
+</body>
+</html>
