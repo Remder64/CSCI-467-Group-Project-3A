@@ -163,7 +163,8 @@
                 <td>$<%= all[part].price %></td>
                 <td>
                     <form action="/cart/add/<%= all[part].number %>" method="POST">
-                        <button id="add_to_cart"type="submit">Add to Cart</button>
+                        <input type="text" name="quantity" value=""><br><br>
+                        <input type="submit" value="Add to cart">
                     </form>
                 </td>
             </tr>

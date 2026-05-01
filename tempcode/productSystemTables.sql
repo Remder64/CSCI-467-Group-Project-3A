@@ -8,8 +8,8 @@ CREATE TABLE customerorders (
     date date,
     time time,
     status varchar(15) NOT NULL,
-    price float(4,2) NOT NULL,
-    weightLB float(4,2) NOT NULL
+    price float(10,2) NOT NULL,
+    weightLB float(10,2) NOT NULL
 );
 
 create table inventory (
