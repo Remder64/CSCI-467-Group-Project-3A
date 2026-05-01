@@ -98,4 +98,39 @@ module.exports = {
             }
         );
     },
+
+    // ── ADMIN ──────────────────────────────────────────
+
+    getShippingRates: (result) => {
+        pool2.query('SELECT * FROM shippingrates ORDER BY minWeight', function(err, rows) {
+            if (err) throw err;
+            result(rows);
+        });
+    },
+    
+    addShippingRate: (minWeight, maxWeight, charge, result) => {
+        pool2.query(
+            'INSERT INTO shippingrates (minWeight, maxWeight, charge) VALUES (?, ?, ?)',
+            [minWeight, maxWeight, charge],
+            function(err, rows) { if (err) throw err; result(rows); }
+        );
+    },
+    
+    deleteShippingRate: (rateID, result) => {
+        pool2.query('DELETE FROM shippingrates WHERE rateID = ?', [rateID],
+            function(err, rows) { if (err) throw err; result(rows); }
+        );
+    },
+    
+    searchOrders: (filters, result) => {
+        let query = 'SELECT * FROM customerorders WHERE 1=1';
+        const params = [];
+        if (filters.dateFrom) { query += ' AND date >= ?';  params.push(filters.dateFrom); }
+        if (filters.dateTo)   { query += ' AND date <= ?';  params.push(filters.dateTo); }
+        if (filters.status)   { query += ' AND status = ?';      params.push(filters.status); }
+        if (filters.priceMin) { query += ' AND price >= ?'; params.push(filters.priceMin); }
+        if (filters.priceMax) { query += ' AND price <= ?'; params.push(filters.priceMax); }
+        query += ' ORDER BY date DESC';
+        pool2.query(query, params, function(err, rows) { if (err) throw err; result(rows); });
+    }
 }
