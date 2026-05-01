@@ -160,6 +160,54 @@ app.post('/desk/:partNumber', async (req, res) => {
   res.redirect('/desk');
 });
 
+// ── WAREHOUSE WORKER ───────────────────────────────────
+//view all authorized customer orders
+app.get('/warehouse', (req, res) => {
+  id.getAuthorizedOrders((orders) => {
+    res.render('warehouse', { orders });
+  });
+});
+
+//work on a customer's order
+app.get('/warehouse/order/:orderID', (req, res) => {
+  const orderID = req.params.orderID;
+  id.getOrderByID(orderID, (order) => {
+    id.getOrderItems(orderID, (items) => {
+      if (items.length === 0) return res.render('warehouse', { order, items: [] });
+      let enriched = [...items];
+      let done = 0;
+      items.forEach((item, idx) => {
+        parts.getByNum(item.partNumber, (part) => {
+          enriched[idx].description = part ? part.description : 'Unknown';
+          done++;
+          if (done === items.length) res.render('warehouse', { order, items: enriched });
+        });
+      });
+    });
+  });
+});
+
+//ship and send email after completed order
+app.post('/warehouse/order/:orderID/ship', (req, res) => {
+  const orderID = req.params.orderID;
+  id.getOrderByID(orderID, (order) => {
+    id.shipOrder(orderID, () => {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: { user: 'your@email.com', pass: 'yourpassword' } // update these
+      });
+      transporter.sendMail({
+        from:    'no-reply@autoparts.com',
+        to:      order.custEmail,
+        subject: `Order #${orderID} has shipped!`,
+        text:    `Hi ${order.custName},\n\nYour order #${orderID} has shipped to:\n${order.custAddress}, ${order.custCity}, ${order.custState} ${order.custZip}\n\nThank you!`
+      }).catch(err => console.error('Email error:', err.message));
+      res.redirect('/warehouse');
+    });
+  });
+});
+
 
 app.listen(port, () => {
   console.log(`Listening to this bs at ${port}`)
