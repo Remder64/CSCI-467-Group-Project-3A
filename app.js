@@ -61,36 +61,32 @@ app.get('/cart', (req, res) => {
 
 
 app.post('/cart/add/:num', async (req, res) => {
-  if (req.body.quantity == 0) {
-      res.redirect('/getParts');
-  }
+    const prtNum = req.params.num;
 
-  const prtNum = req.params.num;
+    parts.getByNum(prtNum, (part) => {
+        if (!part) return res.status(404).send("Whoops! Part Could Not Be Found.");
 
-  parts.getByNum(prtNum, (part) => {
-    if(!part) return res.status(404).send("Whoops! Part Could Not Be Found.");
+        //checks if there is a session for the user
+        if (!req.session.cart) req.session.cart = [];
 
-    //checks if there is a session for the user
-    if(!req.session.cart) req.session.cart = [];
+        var existingItem = req.session.cart.find((item) => item.number == prtNum);
+        console.log(existingItem);
+        if (existingItem) {
+            existingItem.qty = +existingItem.qty + +req.body.quantity;
+        }
+        else {
+            req.session.cart.push({
+                number: part.number,
+                description: part.description,
+                price: part.price,
+                weight: part.weight,
+                picture: part.picture,
+                qty: parseInt(req.body.quantity) || 1
+            });
+        }
 
-    var existingItem = req.session.cart.find((item) => item.number == prtNum);
-    console.log(existingItem);
-    if (existingItem) {
-      existingItem.qty = +existingItem.qty + +req.body.quantity;
-    }
-    else {
-      req.session.cart.push({
-        number: part.number,
-        description: part.description,
-        price: part.price,
-        weight: part.weight,
-        picture: part.picture,
-        qty: req.body.quantity
-      });
-    }
-
-    res.redirect('/getParts');
-  })
+        res.redirect('/getParts');
+    })
 });
 
 
