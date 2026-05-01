@@ -12,6 +12,10 @@ ALTER TABLE customerorders
     ADD COLUMN subtotal DECIMAL(10,2),
     ADD COLUMN shippingCharge DECIMAL(10,2) DEFAULT 0;
 
+ALTER TABLE customerorders
+    MODIFY COLUMN price float(10,2) NOT NULL,
+    MODIFY weightLB float(10,2) NOT NULL;
+
 CREATE TABLE IF NOT EXISTS orderitems (
     itemID      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     orderID     INT NOT NULL,
