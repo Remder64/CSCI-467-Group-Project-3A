@@ -21,3 +21,10 @@ CREATE TABLE IF NOT EXISTS orderitems (
     weightEach  DECIMAL(6,2) NOT NULL,
     FOREIGN KEY (orderID) REFERENCES customerorders(orderid)
 );
+
+CREATE TABLE IF NOT EXISTS shippingrates (
+    rateID      INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    minWeight   DECIMAL(6,2) NOT NULL,
+    maxWeight   DECIMAL(6,2) NOT NULL,
+    charge      DECIMAL(10,2) NOT NULL
+);
