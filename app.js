@@ -124,18 +124,54 @@ app.get('/checkoutPart', (req, res) => {
 
 
 //credit form subitted interface
+const createOrder = require('./controllers/createOrder');
 app.post('/checkoutPart/processCC', (req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const cc = req.body.cc;
-  const exp = req.body.exp;
-  const amount = req.session.cart ? req.session.cart.reduce((sum, item) => sum + item.price * item.qty, 0) : 0;
+  const name    = req.body.name;
+  const email   = req.body.email;
+  const address = req.body.address;
+  const city    = req.body.city;
+  const state   = req.body.state;
+  const zip     = req.body.zip;
+  const cc      = req.body.cc;
+  const exp     = req.body.exp;
 
+  const cartItems   = req.session.cart || [];
+  const amount      = cartItems.reduce((sum, item) => sum + parseFloat(item.price) * parseFloat(item.qty), 0);
+  const totalWeight = cartItems.reduce((sum, item) => sum + parseFloat(item.weight) * parseFloat(item.qty), 0);
 
-  credit.processTrans({name, email, cc, exp, amount}, (result) => {
-    res.render('creditResult.ejs', { data: result });
+  credit.processTrans({ name, email, cc, exp, amount }, (authResponse) => {
+    if (authResponse.errors && authResponse.errors.length > 0) {
+      return res.render('creditResult.ejs', { data: authResponse });
+    }
+    const orderData = {
+      custName: name, custEmail: email,
+      custAddress: address, custCity: city,
+      custState: state, custZip: zip,
+      subtotal: amount, shippingCharge: 0, price: amount,
+      weightLB: totalWeight,
+      authNumber: typeof authResponse === 'object' ? authResponse.authorization : authResponse,
+      transactionID: ''
+    };
+
+    createOrder.createOrder(orderData, (orderID) => {
+      let saved = 0;
+      if (cartItems.length === 0) {
+        req.session.cart = [];
+        return res.render('creditResult.ejs', { data: authResponse });
+      }
+      cartItems.forEach(item => {
+        createOrder.addOrderItem(orderID, item.number, item.qty, item.price, item.weight, () => {
+          saved++;
+          if (saved === cartItems.length) {
+            req.session.cart = [];
+            res.render('creditResult.ejs', { data: authResponse });
+          }
+        });
+      });
+    });
   });
 });
+
 
 
 //desk
