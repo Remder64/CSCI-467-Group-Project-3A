@@ -58,4 +58,44 @@ module.exports = {
             result(rows);
         });
     },
+
+    // ── WAREHOUSE ──────────────────────────────────────
+
+    getAuthorizedOrders: (result) => {
+        pool2.query(
+            "SELECT * FROM customerorders WHERE status = 'authorized' ORDER BY date, time",
+            function(err, rows) {
+                if (err) throw err;
+                result(rows);
+            }
+        );
+    },
+
+    getOrderByID: (orderID, result) => {
+        pool2.query('SELECT * FROM customerorders WHERE orderID = ?', [orderID],
+            function(err, rows) {
+                if (err) throw err;
+                result(rows[0]);
+            }
+        );
+    },
+
+    getOrderItems: (orderID, result) => {
+        pool2.query('SELECT * FROM orderitems WHERE orderID = ?', [orderID],
+            function(err, rows) {
+                if (err) throw err;
+                result(rows);
+            }
+        );
+    },
+
+    shipOrder: (orderID, result) => {
+        pool2.query(
+            "UPDATE customerorders SET status = 'shipped' WHERE orderID = ?", [orderID],
+            function(err, rows) {
+                if (err) throw err;
+                result(rows);
+            }
+        );
+    },
 }
