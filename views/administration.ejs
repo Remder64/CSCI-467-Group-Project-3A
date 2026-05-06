@@ -39,34 +39,77 @@
 <head>
     <title>admin</title>
     <a href="/">Home</a>
-    <header>Shipping rates</header>
+    <header>Shipping</header>
     <div class="catalog">
     <table>
         <tr>
-            <th>Name</th>
-            <th>min weight</th>
-            <th>max weight</th>
-            <th>charge</th>
+            <th>orderID</th>
+            <th>weightLB</th>
+            <th>chargemulti</th>
+            <th>shiptotal</th>
         </tr>   
 
         <% for (part in all) { %>
         <tr>
-            <td><%= all[part].rateID %></td>
+            <td><%= all[part].orderID %></td>
+            <td><%= all[part].weightLB %></td>
             <td>
-                current min: <%= all[part].minWeight %>
-                <form action="/administration/min/<%=all[part].minWeight%>" method="POST">
-                    <input type="text" name="min" value="new min?"><br><br>
+                current multiplier: <%= all[part].chargemulti %>
+                <form action="/administration/charge/<%=all[part].orderID%>" method="POST">
+                    <input type="text" name="chargemulti" value="new multiplier?"><br><br>
                     <input type="submit" value="Submit">
                 </form>
             </td>
-            <td>
-                current max: <%= all[part].maxWeight %>
-                <form action="/administration/max/<%=all[part].maxWeight %>" method="POST">
-                    <input type="text" name="max" value="new max?"><br><br>
-                    <input type="submit" value="Submit">
-                </form>
-            </td>
-            <td>charge</td>
+            <td><%= all[part].shiptotal %></td>
+        <% }; %>
+        </tr>
+
+    </table>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+
+    <header>customer orders </header>
+    <div class="catalog">
+    <table>
+        <tr>
+            <th>orderID</th>
+            <th>date</th>
+            <th>time</th>
+            <th>status</th>
+            <th>price</th>
+            <th>weightLB</th>
+            <th>authNumber</th>
+            <th>transactionID</th>
+            <th>custName</th>
+            <th>custEmail</th>
+            <th>custAddress</th>
+            <th>custCity</th>
+            <th>custZip</th>
+            <th>subtotal</th>
+            <th>shippingCharge</th>
+        </tr>   
+
+        <% for (part2 in all) { %>
+        <tr>
+            <td><%= all2[part2].orderID %></td>
+            <td><%= all2[part2].date %></td>
+            <td><%= all2[part2].time %></td>      
+            <td><%= all2[part2].status %></td>   
+            <td><%= all2[part2].price %></td>   
+            <td><%= all2[part2].weightLB %></td>
+            <td><%= all2[part2].authNumber %></td>
+            <td><%= all2[part2].transactionID %></td>
+            <td><%= all2[part2].custName %></td>
+            <td><%= all2[part2].custEmail %></td>
+            <td><%= all2[part2].custAddress %></td>
+            <td><%= all2[part2].custCity %></td>
+            <td><%= all2[part2].custZip %></td>
+            <td><%= all2[part2].subtotal %></td>
+            <td><%= all2[part2].shippingCharge %></td>
         <% }; %>
         </tr>
 

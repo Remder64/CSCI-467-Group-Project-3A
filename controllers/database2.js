@@ -103,15 +103,22 @@ module.exports = {
     // ── ADMIN ──────────────────────────────────────────
 
     getShippingRates: (result) => {
-        pool2.query('SELECT * FROM shippingrates ORDER BY minWeight', function(err, rows) {
+        pool2.query('SELECT * FROM shippingrates', function(err, rows) {
             if (err) throw err;
             result(rows);
         });
     },
 
-    changemin: (result) => {
-        pool2.query('UPDATE shippingrates SET minWeight = ? WHERE rateID = ?', function(err, rows) {
-            [minWeight, rateID],
+    getcustomerorders: (result) => {
+        pool2.query('SELECT * FROM customerorders', function(err, rows) {
+            if (err) throw err;
+            result(rows);
+        });
+    },
+
+    changemulti: (newmulti, orderID, result) => {
+        pool2.query('UPDATE shippingrates SET chargemulti = ? WHERE orderID = ?', function(err, rows) {
+            [newmulti, orderID],
             function (err, rows) {
                 if (err) throw err;
                 console.log('changed ', rows.affectedRows, ' row in inventory');
@@ -120,16 +127,21 @@ module.exports = {
         });
     },
 
-    changemax: (result) => {
-        pool2.query('UPDATE shippingrates SET maxWeight = ? WHERE rateID = ?', function(err, rows) {
-            [maxWeight, rateID],
+    /*
+
+        ChangeQuantity: (partNumber, quantity, result) => {
+        pool2.query(
+            'UPDATE inventory SET quantityOnHand = ? WHERE partNumber = ?',
+            [quantity, partNumber],
             function (err, rows) {
                 if (err) throw err;
                 console.log('changed ', rows.affectedRows, ' row in inventory');
                 //result(rows); not needed?
             }
-        });
+        );
     },
+    */
+
 
     /*
     //changes the quantity on hand for a specific part

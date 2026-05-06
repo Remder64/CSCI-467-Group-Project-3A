@@ -44,6 +44,15 @@ CREATE TABLE IF NOT EXISTS orderitems (
     FOREIGN KEY (orderID) REFERENCES customerorders(orderid)
 );
 
+CREATE TABLE IF NOT EXISTS shippingrates (
+    orderID     INT NOT NULL,
+    weightLB    INT NOT NULL,
+	chargemulti INT NOT NULL DEFAULT 1,
+	shiptotal   INT NOT NULL,
+    
+    FOREIGN KEY (orderID) REFERENCES customerorders(orderid)
+);
+
 Describe inventory;
 Describe customerorders;
 Describe orderitems;

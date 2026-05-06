@@ -134,6 +134,9 @@ app.post('/checkoutPart/processCC', (req, res) => {
   const zip     = req.body.zip;
   const cc      = req.body.cc;
   const exp     = req.body.exp;
+  const shiptotal = 0
+  const chargemulti = 1;
+
 
   const cartItems   = req.session.cart || [];
 
@@ -156,11 +159,12 @@ app.post('/checkoutPart/processCC', (req, res) => {
       custName: name, custEmail: email,
       custAddress: address, custCity: city,
       custState: state, custZip: zip,
-      subtotal: amount, shippingCharge: 0, price: amount,
+      subtotal: amount, shippingCharge: totalWeight, total: amount + totalWeight, //initial total will be + weight but modified later in admin
       weightLB: totalWeight,
       authNumber: typeof authResponse === 'object' ? authResponse.authorization : authResponse,
       transactionID: ''
     };
+
 
     createOrder.createOrder(orderData, (orderID) => {
       let saved = 0;
@@ -177,7 +181,17 @@ app.post('/checkoutPart/processCC', (req, res) => {
           }
         });
       });
+
+
+      //shipping table entry
+      const shippingdata = {
+        orderID: orderID, weightLB: totalWeight,
+        chargemulti: 0, shiptotal: totalWeight //default value
+      };
+      createOrder.addshipping( orderID , totalWeight, chargemulti, shiptotal)
     });
+
+
   });
 });
 
@@ -260,31 +274,28 @@ app.post('/warehouse/order/:orderID/ship', (req, res) => {
 //admin
 app.get('/administration', (req, res) => {
   id.getShippingRates((list) => {
-    const partsInshipping = req.session.shippingrates ? req.session.shippingrates.length : 0;
-    res.render('administration', {all: list, partsInshipping});
+  
+    partsInshipping = req.session.shippingrates ? req.session.shippingrates.length : 0;
+
+    id.getcustomerorders((list2) => {
+      customerorderlist = req.session.customerorders ? req.session.customerorders.length : 0;
+      res.render('administration', {all: list, partsInshipping, all2: list2, customerorderlist });
+    });
+
+
   });
+
 }); 
 
-app.get('/administration/min/:num', async (req, res) => {
+app.post('/administration/charge/:num', async (req, res) => {
   id.getShippingRates((list) => {
-    const currentid = req.params.rateID;
-    const newmin = req.body.min;
-    id.changemin(currentid, newmin)
+    const currentid = req.params.orderID;
+    const newmulti = req.body.chargemulti;
+    id.changemulti(newmulti, currentid)
 
     res.redirect('/administration');
   });
 }); 
-
-app.get('/administration/max/:num', async (req, res) => {
-  id.getShippingRates((list) => {
-    const currentid = req.params.rateID;
-    const newmax = req.body.max;
-    
-    id.changemin(currentid, newmax)
-
-    res.redirect('/administration');
-  });
-});
 
 
 
