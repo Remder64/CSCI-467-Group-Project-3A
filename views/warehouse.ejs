@@ -62,10 +62,10 @@
                 </tr>
                 <% orders.forEach(function(o) { %>
                 <tr class="data">
-                    <td><%= o.orderID %></td>
-                    <td><%= o.orderDate %></td>
+                    <td><%= o.orderid %></td>
+                    <td><%= o.date %></td>
                     <td><%= o.custName %></td>
-                    <td>$<%= o.totalPrice %></td>
+                    <td>$<%= o.subtotal %></td>
                     <td>
                         <a href="/warehouse/order/<%= o.orderID %>">
                             <button>Start Packing</button>

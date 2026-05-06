@@ -136,8 +136,17 @@ app.post('/checkoutPart/processCC', (req, res) => {
   const exp     = req.body.exp;
 
   const cartItems   = req.session.cart || [];
-  const amount      = cartItems.reduce((sum, item) => sum + parseFloat(item.price) * parseFloat(item.qty), 0);
-  const totalWeight = cartItems.reduce((sum, item) => sum + parseFloat(item.weight) * parseFloat(item.qty), 0);
+
+  console.log(cartItems.price)
+  console.log(cartItems.weight)
+  console.log(cartItems.qty)
+
+
+  const amount      = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const totalWeight = cartItems.reduce((sum, item) => sum + item.weight * item.qty, 0);
+
+  console.log(amount)
+  console.log(totalWeight)
 
   credit.processTrans({ name, email, cc, exp, amount }, (authResponse) => {
     if (authResponse.errors && authResponse.errors.length > 0) {
