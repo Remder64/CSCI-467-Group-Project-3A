@@ -1,9 +1,11 @@
-//move this file to the main directory (where app.js is)
-//make sure your local database server is running
-//use npm install --save mysql2
+/*
+Run this code **ONCE** to copy the data from the cloud database to the local database 
+make sure your local database server is running
+use npm install --save mysql2 and node copy.js
+*/
 const mysql = require('mysql2/promise');
 
-//cloud
+//cloud database
 const pool1 = mysql.createPool({
     host: 'blitz.cs.niu.edu',
     user: 'student',
@@ -14,10 +16,10 @@ const pool1 = mysql.createPool({
         rejectUnauthorized: false
     }
 });
-//local (may need to change)
+//local database (may need to change)
 const pool2 = mysql.createPool({
     host: 'localhost',
-    user: 'guest', //change to your user, (most likely "root")
+    user: 'guest', //change to your user
     password: 'guest123', //change to your password
     database: 'auto_parts',
     port: '3306'
