@@ -191,7 +191,11 @@ app.post('/desk/:partNumber', async (req, res) => {
   const newquantity = req.body.quantity;
   console.log(req.body.quantity);
 
-  id.ChangeQuantity(currentid, newquantity);
+  //allow for data to change before refreshing
+  const func = async() => { 
+    id.ChangeQuantity(currentid, newquantity);
+  }
+  await func()
   
   res.redirect('/desk');
 });
