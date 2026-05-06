@@ -1,4 +1,7 @@
 var mysql = require('mysql')
+
+//local database
+//alter to match your local connection
 var pool = mysql.createPool({
   host: 'blitz.cs.niu.edu',
   user: 'student',
