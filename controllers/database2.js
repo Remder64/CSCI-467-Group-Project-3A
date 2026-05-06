@@ -1,4 +1,7 @@
 var mysql = require('mysql2')
+
+//controller for local database
+//alter to match your local connection
 var pool2 = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -6,8 +9,6 @@ var pool2 = mysql.createPool({
     database: 'auto_parts',
     port: '3306'
 });
-
-//'UPDATE inventory SET qunatityOnHand = 'param1' WHERE partNumber = 'param2' '
 
 module.exports = {
     //get all info on parts in inventory
