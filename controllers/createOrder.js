@@ -1,5 +1,7 @@
 var mysql = require('mysql2');
 
+//local database
+//alter to match your local connection
 var pool2 = mysql.createPool({
     host: 'localhost',
     user: 'guest',
